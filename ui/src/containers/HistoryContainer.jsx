@@ -75,6 +75,14 @@ class HistoryContainer extends React.Component {
                     available={balance.available}
                     onUpdate={this.gotoPage(page)}
                 />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ marginTop: '10px' }}
+                    fullWidth
+                >
+                    Добавить
+                </Button>
                 {loading && <CircularProgress />}
                 {!loading && <List data={data} />}
                 <div>
