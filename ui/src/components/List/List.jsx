@@ -1,14 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-    Card,
-    CardHeader,
-    CardContent,
-    CardActions,
-    List as MList,
-    ListItem,
-    Typography,
-} from '@material-ui/core';
+import { List as MList, ListItem } from '@material-ui/core';
+import ItemCard from '../ItemCard';
 
 class List extends React.PureComponent {
     static propTypes = {
@@ -21,17 +14,7 @@ class List extends React.PureComponent {
             <MList>
                 {data.map(item => (
                     <ListItem key={item._id}>
-                        <Card>
-                            <CardHeader disableTypography>
-                                <Typography>{item.type}</Typography>
-                            </CardHeader>
-                            <CardContent>
-                                <Typography>{item.price}</Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Typography>{item.description}</Typography>
-                            </CardActions>
-                        </Card>
+                        <ItemCard item={item} />
                     </ListItem>
                 ))}
             </MList>
