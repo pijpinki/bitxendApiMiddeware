@@ -20,6 +20,11 @@ class Api {
         return JSON.parse(response);
     }
 
+    async getBalance() {
+        const { response } = await qwest.get(`${this.host}/balance`, { token: localStorage.secret });
+        return JSON.parse(response);
+    }
+
     async addItem(data) {
         return axios.post(`${this.host}/history`, data);
     }

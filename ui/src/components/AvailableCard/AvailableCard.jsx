@@ -2,25 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
     Card,
+    CardHeader,
     CardContent,
     CardActions,
     Typography,
     Button,
 } from '@material-ui/core';
 
-class AvalibleCard extends React.PureComponent {
+class AvailableCard extends React.PureComponent {
     static propTypes = {
-        avalible: PropTypes.number.isRequired,
+        total: PropTypes.number.isRequired,
+        available: PropTypes.number.isRequired,
         onUpdate: PropTypes.func.isRequired,
     };
 
     render() {
-        const { avalible, onUpdate } = this.props;
+        const { available, total, onUpdate } = this.props;
 
         return (
             <Card>
+                <CardHeader title={`Всего ${total}`} />
                 <CardContent>
-                    <Typography>Доступно {avalible}</Typography>
+                    <Typography variant="title">Доступно {available}</Typography>
                 </CardContent>
                 <CardActions>
                     <Button onClick={onUpdate}>Обновить</Button>
@@ -30,4 +33,4 @@ class AvalibleCard extends React.PureComponent {
     }
 }
 
-export default AvalibleCard;
+export default AvailableCard;

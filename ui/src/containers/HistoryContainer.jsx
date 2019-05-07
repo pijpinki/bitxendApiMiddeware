@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, CircularProgress } from '@material-ui/core';
 import Api from '../api';
 import List from '../components/List';
+import AvailableCard from '../components/AvailableCard';
 
 class HistoryContainer extends React.Component {
     constructor(props) {
@@ -10,6 +11,10 @@ class HistoryContainer extends React.Component {
         this.state = {
             loading: false,
             errored: false,
+            balance: {
+                total: 0,
+                available: 0,
+            },
             error: {},
             page: 0,
             data: [],
@@ -22,10 +27,17 @@ class HistoryContainer extends React.Component {
 
     getData = () => {
         const { page } = this.state;
-        Api.getHistory(page)
-            .then(response => this.setState({
+        Promise.all([
+            Api.getHistory(page),
+            Api.getBalance(),
+        ])
+            .then(([response, balance]) => this.setState({
                 data: response.result,
                 page: response.page,
+                balance: {
+                    total: balance.total,
+                    available: balance.available,
+                },
                 errored: false,
                 error: {},
             }))
@@ -46,6 +58,7 @@ class HistoryContainer extends React.Component {
             data,
             error,
             errored,
+            balance,
         } = this.state;
 
         if (errored) return (
@@ -57,12 +70,18 @@ class HistoryContainer extends React.Component {
 
         return (
             <div>
+                <AvailableCard
+                    total={balance.total}
+                    available={balance.available}
+                    onUpdate={this.gotoPage(page)}
+                />
                 {loading && <CircularProgress />}
                 {!loading && <List data={data} />}
                 <div>
                     {page >= 0 && <Button onClick={this.gotoPage(page - 1)}>{'<'}</Button>}
                     {page}
                     <Button onClick={this.gotoPage(page + 1)}>{'>'}</Button>
+                    <Button onClick={this.gotoPage(page)}>Обновить</Button>
                 </div>
             </div>
         );
