@@ -24,7 +24,8 @@ class HistoryContainer extends React.Component {
         const { page } = this.state;
         Api.getHistory(page)
             .then(response => this.setState({
-                data: response.data,
+                data: response.result,
+                page: response.page,
                 errored: false,
                 error: {},
             }))

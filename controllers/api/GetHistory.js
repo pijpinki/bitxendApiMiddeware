@@ -7,7 +7,7 @@ class GetHistory extends PavelHandler {
     }
 
     static get endpoint() {
-        return 'api/history';
+        return '/api/history';
     }
 
     static get processors() {
@@ -16,7 +16,10 @@ class GetHistory extends PavelHandler {
 
 
     async onRequest() {
-        return this.send({ result: [] });
+        return this.send({
+            result: [],
+            page: Number(this.data.page),
+        });
     }
 }
 

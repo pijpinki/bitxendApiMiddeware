@@ -1,9 +1,10 @@
+import qwest from 'qwest';
 import axios from 'axios';
 
 class Api {
     static get host() {
         const { location: { hostname, protocol } } = window;
-        return `${protocol}${hostname}:8085/api`;
+        return `${protocol}//${hostname}:8085/api`;
     }
 
     get host() {
@@ -11,7 +12,12 @@ class Api {
     }
 
     async getHistory(page) {
-        return axios.get(`${this.host}/history`, { page });
+        const { response } = await qwest.get(`${this.host}/history`, {
+            page,
+            token: localStorage.secret,
+        });
+
+        return JSON.parse(response);
     }
 
     async addItem(data) {
